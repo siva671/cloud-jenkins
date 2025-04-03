@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/siva671/cloud-jenkins.git'
+            }
+        }
+        stage('Deploy to Web Server') {
+            steps {
+                sshagent(['webserver-ssh']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no root@192.168.234.160 "sudo cp -r /root/* /var/www/html/ && sudo systemctl restart nginx"
+                    '''
+                }
+            }
+        }
+    }
+}
