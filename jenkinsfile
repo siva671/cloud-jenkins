@@ -10,7 +10,9 @@ pipeline {
             steps {
                 sshagent(['webserver-ssh']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no root@192.168.234.160 "sudo cp -r /root/* /var/www/html/ && sudo systemctl restart nginx"
+                    ssh -o StrictHostKeyChecking=no root@192.168.234.160 
+                    sudo cp -r /root/cloud-jenkins/* /var/www/html/ &&
+                    sudo systemctl restart nginx
                     '''
                 }
             }
